@@ -6,7 +6,7 @@ class Store {
     static async listProducts() {
 
         //list all products found in database
-        const results = db.query(`
+        const results = await db.query(`
             SELECT p.id,
                    p.name,
                    p.category,
@@ -14,7 +14,7 @@ class Store {
                    p.description,
                    p.price
             FROM products AS p
-            ORDER BY p.id DESC
+            ORDER BY p.id ASC
         `)
         return results.rows
     }

@@ -33,3 +33,8 @@ CREATE TABLE order_details (
   discount    INTEGER, 
   PRIMARY KEY (order_id, product_id)
 );
+
+
+-- CREATE TABLE ratings (
+
+-- );

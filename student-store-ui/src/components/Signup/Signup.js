@@ -97,6 +97,18 @@ export default function Signup({ user, setUser }) {
             />
             {errors.name && <span className="error">{errors.name}</span>}
           </div>
+          
+          <div className="input-field">
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              name="username"
+              placeholder="Enter a username"
+              value={form.username}
+              onChange={handleOnInputChange}
+            />
+            {errors.username && <span className="error">{errors.username}</span>}
+          </div>
 
           <div className="input-field">
             <label htmlFor="email">Email</label>

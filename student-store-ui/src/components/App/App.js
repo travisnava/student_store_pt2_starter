@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import axios from "axios"
 import Home from "../Home/Home"
 import Signup from "../Signup/Signup"
 import Login from "../Login/Login"
@@ -31,7 +30,11 @@ export default function App() {
     setSearchInputValue(event.target.value)
   }
 
-
+  const handleOnLogout = async () => {
+    await apiClient.logoutUser()
+    setUser({})
+    console.log("Logged out")
+  }
 
 
 
@@ -55,9 +58,10 @@ export default function App() {
 
   const handleOnCheckout = async () => {
     setIsCheckingOut(true)
-
+  
     try {
-      const {data, error} = await apiClient.createOrder({ order: cart })
+      console.log("HERE", { order: cart })
+      const {data, err} = await apiClient.createOrder({ order: cart })
       if (data?.order) {
         setOrders((o) => [...data.order, ...o])
         setIsCheckingOut(false)
@@ -98,6 +102,31 @@ export default function App() {
     fetchProducts()
   }, [])
 
+
+  useEffect(() => {
+    const fetchOrders = async () => {
+      setIsFetching(true)
+
+      try {
+        const {data, error} = await apiClient.listOrdersForUser()
+        if (data?.orders) {
+          setOrders(data.orders)
+        } else {
+          setError("Error fetching past orders.")
+        }
+      } catch (err) {
+        console.log(err)
+        const message = err?.response?.data?.error?.message
+        setError(message ?? String(err))
+      } finally {
+        setIsFetching(false)
+      }
+    }
+
+    fetchOrders()
+  }, [])
+
+  
   return (
     <div className="App">
       <BrowserRouter>
@@ -117,6 +146,7 @@ export default function App() {
                 addToCart={handleOnAddToCart}
                 removeFromCart={handleOnRemoveFromCart}
                 getQuantityOfItemInCart={handleGetItemQuantity}
+                handleOnLogout = {handleOnLogout}
               />
             }
           />

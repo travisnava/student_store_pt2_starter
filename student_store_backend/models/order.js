@@ -36,7 +36,8 @@ class Order {
 
 
         // looping through each item in user's order and adding a row to order details for each product in order
-        order.forEach((product) => {
+
+        Object.keys(order).forEach((productId) => {
             db.query(`
                 INSERT INTO order_details (
                     order_id,
@@ -44,9 +45,11 @@ class Order {
                     quantity
                 )
                 VALUES ($1, $2, $3)
-            `, [orderId.id, product.id, product.quantity])
+            `, [orderId.id, productId, order[productId]])
         })
-        // return orderId.id
+        
+
+
 
 
 

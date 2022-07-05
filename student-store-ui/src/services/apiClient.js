@@ -56,6 +56,11 @@ class ApiClient {
         return await this.request({ endpoint: `auth/me`, method: `GET`})
     }
         
+    async logoutUser() {
+        this.setToken(null)
+        localStorage.setItem(this.tokenName, "")
+    }
+
     async listProducts() {
         return await this.request({ endpoint: `store`, method: `GET`})
     }

@@ -20,6 +20,7 @@ export default function Home({
   addToCart,
   removeFromCart,
   getQuantityOfItemInCart,
+  handleOnLogout,
 }) {
   const location = useLocation()
 
@@ -41,6 +42,7 @@ export default function Home({
         setActiveCategory={setActiveCategory}
         handleOnSearchInputChange={handleOnSearchInputChange}
         searchInputValue={searchInputValue}
+        handleOnLogout={handleOnLogout}
       />
       <Hero />
       <About />
